@@ -1,19 +1,8 @@
 {
   "canisters": {
-    "test_ic_previews_backend": {
-      "main": "src/test_ic_previews_backend/main.mo",
-      "type": "motoko"
-    },
-    "test_ic_previews_frontend": {
-      "dependencies": [
-        "test_ic_previews_backend"
-      ],
-      "frontend": {
-        "entrypoint": "src/test_ic_previews_frontend/src/index.html"
-      },
+    "frontend": {
       "source": [
-        "src/test_ic_previews_frontend/assets",
-        "dist/test_ic_previews_frontend/"
+        "src"
       ],
       "type": "assets"
     }
