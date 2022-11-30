@@ -1,0 +1,13 @@
+name: Release Preview
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  request_preview_canister:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: |
+        pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+        echo "Closed: $pull_number"
