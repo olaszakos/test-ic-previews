@@ -9,5 +9,5 @@ jobs:
 
     steps:
       - run: |
-        pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-        echo "Opened: $pull_number"
+          pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          echo "Opened: $pull_number"
