@@ -32,6 +32,8 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
+            const bot_user = await octokit.rest.users.getAuthenticated();
+            console.log(JSON.stringify(bot_user, null, 2))
             const comments = await github.rest.issues.listComments({
               issue_number: context.issue.number,
               repo: context.repo.repo,
