@@ -15,7 +15,7 @@ jobs:
       - run: |
           pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           pip install ic-py
-          echo "{\"website\":{\"ic\":\"`python3 .github/workflows/scripts/request_canister.py $pull_number`\"}}" > canister_ids.json
+          echo "{\"frontend\":{\"ic\":\"`python3 .github/workflows/scripts/request_canister.py $pull_number`\"}}" > canister_ids.json
           sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"
 
           mkdir ~/.config/dfx
@@ -24,7 +24,7 @@ jobs:
           echo $DFX_IDENTITY_PREVIEW | base64 -d > ~/.config/dfx/identity/default/identity.pem
           sed -i 's/\\r\\n/\r\n/g' ~/.config/dfx/identity/default/identity.pem
 
-          dfx deploy --network=ic --no-wallet website
+          dfx deploy --network=ic --no-wallet frontend
         env:
           DFX_IDENTITY_PREVIEW: ${{ secrets.DFX_IDENTITY_PREVIEW }}
           POOL_CANISTER_ID: ${{ secrets.POOL_CANISTER_ID }}
