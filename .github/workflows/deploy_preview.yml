@@ -33,9 +33,9 @@ jobs:
         with:
           script: |
             const comments = github.rest.issues.listComments({
-              owner,
-              repo,
-              issue_number,
+              issue_number: context.issue.number,
+              repo: context.repo.repo,
+              owner: context.repo.owner,
             });
             console.log(comments)
 
