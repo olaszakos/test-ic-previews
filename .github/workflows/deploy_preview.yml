@@ -50,20 +50,4 @@ jobs:
                 repo: context.repo.repo,
                 body: `🤖 Here's your preview: https://${process.env.PREVIEW_CANISTER_ID}.ic0.app`
               })
-            } else {
-              console.log('Preview comment already exists.', maybeExistingComment)
             }
-
-          # github.rest.issues.createComment({
-          #   issue_number: context.issue.number,
-          #   owner: context.repo.owner,
-          #   repo: context.repo.repo,
-          #   body: '👋 Thanks for reporting!'
-          # })
-
-###
-# [x] request canister id
-# [x] save pool canister id into canister_ids.json
-# [x] install dfx
-# [x] load identity
-# [ ] build dfx project & deploy to pool canister
