@@ -41,7 +41,7 @@ jobs:
               owner: context.repo.owner,
             });
 
-            const maybeExistingComment = comments.find(c=>c.user.login === 'github-actions[bot]' && c.user.type === 'Bot');
+            const maybeExistingComment = comments.data.find(c=>c.user.login === 'github-actions[bot]' && c.user.type === 'Bot');
             if (!maybeExistingComment) {
               console.log('No preview comment, creating one...')
               await github.rest.issues.createComment({
