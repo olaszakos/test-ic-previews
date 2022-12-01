@@ -37,7 +37,7 @@ jobs:
               repo: context.repo.repo,
               owner: context.repo.owner,
             });
-            console.log(comments)
+            console.log(JSON.stringify(comments.data, null, 2))
 
           # github.rest.issues.createComment({
           #   issue_number: context.issue.number,
