@@ -1,0 +1,36 @@
+name: Deploy Preview
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  request_preview_canister:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: |
+          pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          pip install ic-py
+          echo "{\"website\":{\"ic\":\"`python3 .github/workflows/scripts/request_canister.py $pull_number`\"}}" > canister_ids.json
+          sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"
+
+          mkdir ~/.config/dfx
+          mkdir ~/.config/dfx/identity
+          mkdir ~/.config/dfx/identity/default
+          echo $DFX_IDENTITY_PREVIEW | base64 -d > ~/.config/dfx/identity/default/identity.pem
+          sed -i 's/\\r\\n/\r\n/g' ~/.config/dfx/identity/default/identity.pem
+
+          dfx deploy --network=ic --no-wallet website
+        env:
+          DFX_IDENTITY_PREVIEW: ${{ secrets.DFX_IDENTITY_PREVIEW }}
+          POOL_CANISTER_ID: ${{ secrets.POOL_CANISTER_ID }}
+###
+# [x] request canister id
+# [x] save pool canister id into canister_ids.json
+# [x] install dfx
+# [x] load identity
+# [ ] build dfx project & deploy to pool canister
