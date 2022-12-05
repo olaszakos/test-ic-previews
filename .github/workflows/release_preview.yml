@@ -20,7 +20,7 @@ jobs:
       - run: |
           pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           pip install ic-py
-          python3 .github/workflows/scripts/release_canister.py $pull_number
+          python3 .github/workflows/scripts/release-canister.py $pull_number
         env:
           DFX_IDENTITY_PREVIEW: ${{ secrets.DFX_IDENTITY_PREVIEW }}
           POOL_CANISTER_ID: ${{ secrets.POOL_CANISTER_ID }}

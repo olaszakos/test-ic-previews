@@ -15,7 +15,7 @@ jobs:
       - run: |
           pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           pip install ic-py
-          canister_id=$(python3 .github/workflows/scripts/request_canister.py $pull_number)
+          canister_id=$(python3 .github/workflows/scripts/request-canister.py $pull_number)
           echo "{\"frontend\":{\"ic\":\"$canister_id\"}}" > canister_ids.json
           sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"
 
