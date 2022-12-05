@@ -9,4 +9,4 @@ jobs:
 
     steps:
       - run: |
-          curl -v https://api.binance.com/api/v3/ticker/24hr\?symbol\=ICPUSDT
+          curl -v https://api.coinbase.com/v2/prices/ICP-USD/buy
