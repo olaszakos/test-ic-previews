@@ -18,9 +18,9 @@ jobs:
             const comments = require('./.github/workflows/scripts/comments.js');
             const maybeComment = await comments.get(context, github);
             if (maybeComment) {
-              comments.update(context, github, maybeComment.id,  `🤖 Your PR preview is being built...`);
+              await comments.update(context, github, maybeComment.id,  `🤖 Your PR preview is being built...`);
             } else {
-              comments.create(context, github, `🤖 Your PR preview is being built...`);
+              await comments.create(context, github, `🤖 Your PR preview is being built...`);
             }
       - uses: actions/setup-python@v4
         with:
@@ -58,11 +58,10 @@ jobs:
             const comments = require('./.github/workflows/scripts/comments.js');
             const maybeComment = await comments.get(context, github);
             if (maybeComment) {
-              comments.update(context, github, maybeComment.id,  `🤖 Preview build failed.`);
+              await comments.update(context, github, maybeComment.id,  `🤖 Preview build failed.`);
             } else {
-              comments.create(context, github, `🤖 Preview build failed.`);
+              await comments.create(context, github, `🤖 Preview build failed.`);
             }
-            process.exit(1)
 
       - uses: actions/github-script@v6
         with:
@@ -70,7 +69,7 @@ jobs:
             const comments = require('./.github/workflows/scripts/comments.js');
             const maybeComment = await comments.get(context, github);
             if (maybeComment) {
-              comments.update(context, github, maybeComment.id,  `🤖 Here's your preview: https://${process.env.PREVIEW_CANISTER_ID}.ic0.app`);
+              await comments.update(context, github, maybeComment.id,  `🤖 Here's your preview: https://${process.env.PREVIEW_CANISTER_ID}.ic0.app`);
             } else {
-              comments.create(context, github, `🤖 Here's your preview: https://${process.env.PREVIEW_CANISTER_ID}.ic0.app`);
+              await comments.create(context, github, `🤖 Here's your preview: https://${process.env.PREVIEW_CANISTER_ID}.ic0.app`);
             }

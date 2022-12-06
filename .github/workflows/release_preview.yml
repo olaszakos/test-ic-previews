@@ -31,5 +31,5 @@ jobs:
             const comments = require('./.github/workflows/scripts/comments.js');
             const maybeComment = await comments.get(context, github);
             if (maybeComment) {
-              comments.delete(context, github, maybeComment.id);
+              await comments.delete(context, github, maybeComment.id);
             }
