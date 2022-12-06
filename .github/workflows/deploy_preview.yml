@@ -15,7 +15,7 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const comments = require('./scripts/comments.js');
+            const comments = require('./github/workflows/scripts/comments.js');
             const maybeComment = await comments.get(context, github);
             if (maybeComment) {
               comments.update(context, github, maybeComment.id,  `🤖 Your PR preview is being built...`);
@@ -51,7 +51,7 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const comments = require('./scripts/comments.js');
+            const comments = require('./github/workflows/scripts/comments.js');
             const maybeComment = await comments.get(context, github);
             if (maybeComment) {
               comments.update(context, github, maybeComment.id,  `🤖 Here's your preview: https://${process.env.PREVIEW_CANISTER_ID}.ic0.app`);
@@ -62,7 +62,7 @@ jobs:
         if: steps.run.outputs.status != '0'
         with:
           script: |
-            const comments = require('./scripts/comments.js');
+            const comments = require('./github/workflows/scripts/comments.js');
             const maybeComment = await comments.get(context, github);
             if (maybeComment) {
               comments.update(context, github, maybeComment.id,  `🤖 Preview build failed.`);
