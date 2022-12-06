@@ -6,6 +6,9 @@ on:
 jobs:
   request_preview_canister:
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v3
@@ -13,6 +16,7 @@ jobs:
         with:
           python-version: '3.10'
       - run: |
+          echo "Ref: $GITHUB_REF"
           pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           pip install ic-py
           canister_id=$(python3 .github/workflows/scripts/request-canister.py $pull_number)
@@ -32,6 +36,7 @@ jobs:
         env:
           DFX_IDENTITY_PREVIEW: ${{ secrets.DFX_IDENTITY_PREVIEW }}
           POOL_CANISTER_ID: ${{ secrets.POOL_CANISTER_ID }}
+          GITHUB_REF: ${{ github.ref }}
       - uses: actions/github-script@v6
         with:
           script: |
