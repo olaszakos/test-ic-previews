@@ -11,6 +11,7 @@ jobs:
       cancel-in-progress: true
 
     steps:
+      - uses: actions/checkout@v3
       - uses: actions/github-script@v6
         with:
           script: |
@@ -21,8 +22,6 @@ jobs:
             } else {
               comments.create(context, github, `🤖 Your PR preview is being built...`);
             }
-
-      - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
