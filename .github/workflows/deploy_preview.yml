@@ -42,6 +42,8 @@ jobs:
           echo $DFX_IDENTITY_PREVIEW | base64 -d > ~/.config/dfx/identity/default/identity.pem
           sed -i 's/\\r\\n/\r\n/g' ~/.config/dfx/identity/default/identity.pem
 
+          intentional_error
+
           dfx deploy --network=ic --no-wallet frontend
 
         env:
