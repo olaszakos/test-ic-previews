@@ -4,7 +4,7 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  build_and_deploy_preview:
+  build_and_deploy:
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.ref }}
@@ -26,9 +26,9 @@ jobs:
         with:
           python-version: '3.10'
       - name: 'Build & Deploy'
-        continue-on-error: true
         run: |
           echo "Ref: $GITHUB_REF"
+          intentional_error
 
           pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           pip install ic-py
@@ -44,7 +44,6 @@ jobs:
           echo $DFX_IDENTITY_PREVIEW | base64 -d > ~/.config/dfx/identity/default/identity.pem
           sed -i 's/\\r\\n/\r\n/g' ~/.config/dfx/identity/default/identity.pem
 
-          intentional_error
 
           dfx deploy --network=ic --no-wallet frontend
 
@@ -53,7 +52,7 @@ jobs:
           POOL_CANISTER_ID: ${{ secrets.POOL_CANISTER_ID }}
           GITHUB_REF: ${{ github.ref }}
       - uses: actions/github-script@v6
-        if: steps.run.outputs.status != '0'
+        if: ${{ failure() }}
         with:
           script: |
             const comments = require('./.github/workflows/scripts/comments.js');
