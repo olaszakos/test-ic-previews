@@ -17,6 +17,7 @@ jobs:
           python-version: '3.10'
       - run: |
           echo "Ref: $GITHUB_REF"
+
           pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           pip install ic-py
           canister_id=$(python3 .github/workflows/scripts/request-canister.py $pull_number)
