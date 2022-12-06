@@ -27,9 +27,6 @@ jobs:
           python-version: '3.10'
       - name: 'Build & Deploy'
         run: |
-          echo "Ref: $GITHUB_REF"
-          intentional_error
-
           pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           pip install ic-py
           canister_id=$(python3 .github/workflows/scripts/request-canister.py $pull_number)
@@ -50,8 +47,9 @@ jobs:
         env:
           DFX_IDENTITY_PREVIEW: ${{ secrets.DFX_IDENTITY_PREVIEW }}
           POOL_CANISTER_ID: ${{ secrets.POOL_CANISTER_ID }}
-          GITHUB_REF: ${{ github.ref }}
-      - uses: actions/github-script@v6
+
+      - name: Report build error
+        uses: actions/github-script@v6
         if: ${{ failure() }}
         with:
           script: |
